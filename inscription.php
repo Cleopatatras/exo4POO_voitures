@@ -1,6 +1,7 @@
 <?php
 
 require_once 'config/DbConnection.php';
+require_once 'config/session.php';
 
 
 $title = 'Créer un compte';
@@ -28,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!$query->execute()) {
             $error = 'une erreur est survenue';
         } else {
+            $_SESSION['success_message'] = 'votre compte a bien été créé';
 
             header('Location: connection.php');
         }

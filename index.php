@@ -21,6 +21,7 @@
 
 
 require_once 'config/DbConnection.php';
+require_once 'config/session.php';
 
 //$pdo = new PDO("mysql:host=localhost;dbname=voitures;port=3306", 'root', '');
 
@@ -39,27 +40,35 @@ require_once 'template/head.php';
 
     <h1>Bienvenue sur ce site d'exo personnel</h1>
     <main>
+        <?php if (isset($_SESSION['message'])): ?>
+            <div class="alert alert-succes" role="alert">
+                <?php echo $_SESSION['message']; ?>
+                <?php unset($_SESSION['message']); ?>
+            </div>
+        <?php endif; ?>
+
+
         <div class="container">
             <div class="dflex">
                 <?php foreach ($voitures as $key => $voiture) {
                     ?>
-                <div class="card style=" width: 18rem;">
-                    <div class="card-header">
-                        <?php echo $voiture['immatriculation'] ?>
-                    </div>
+                    <div class="card style=" width: 18rem;">
+                        <div class="card-header">
+                            <?php echo $voiture['immatriculation'] ?>
+                        </div>
 
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo $voiture['marque'] . " " . $voiture['modele'] ?></h5>
-                        <img src="<?php echo $voiture['image'] ?>" width=10% alt="">
-                        <p class="card-text"><?php ?></p>
-                        <p class="card-text">année : <?php echo $voiture['annee'] ?></p>
-                        <p class="card-text"><?php echo $voiture['km'] ?> km</p>
-                        <p class="card-text">Motorisation : <?php echo $voiture['type_motorisation'] ?></p>
-                        <p class="card-text">Etat : <?php echo $voiture['etat'] ?></p>
-                        <a href="voiture.php?voiture_id=<?php echo $voiture['id_immatriculation'] ?>"
-                            class="btn btn-primary">voir en détail</a>
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo $voiture['marque'] . " " . $voiture['modele'] ?></h5>
+                            <img src="<?php echo $voiture['image'] ?>" width=10% alt="">
+                            <p class="card-text"><?php ?></p>
+                            <p class="card-text">année : <?php echo $voiture['annee'] ?></p>
+                            <p class="card-text"><?php echo $voiture['km'] ?> km</p>
+                            <p class="card-text">Motorisation : <?php echo $voiture['type_motorisation'] ?></p>
+                            <p class="card-text">Etat : <?php echo $voiture['etat'] ?></p>
+                            <a href="voiture.php?voiture_id=<?php echo $voiture['id_immatriculation'] ?>"
+                                class="btn btn-primary">voir en détail</a>
+                        </div>
                     </div>
-                </div>
                 <?php } ?>
             </div>
         </div>

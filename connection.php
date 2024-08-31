@@ -1,6 +1,7 @@
 <?php
 
 require_once 'config/DbConnection.php';
+require_once 'config/session.php';
 
 $title = 'Se connecter';
 
@@ -24,16 +25,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // si pas d'utilisateur avec ce username en base définie notre erreur
         if (!$user) {
-            $error = 'nom invalides';
+            $error = 'identifiants invalides';
         } else {
             //si utilisateur trouvé alors on vérifie que le mot de passe tapé dans le formulaire corresponde bien à celui hashé en bdd
-            $passwordOk = password_verify($user['password'], $_POST['password']);
-
+            $passwordOk = password_verify($_POST['password'], $user['password']);
+            // var_dump($_POST['password']);
+            // var_dump($user['password']);
+            // die;
             //si pas ok erreur
             if (!$passwordOk) {
-                $error = 'mdp invalides';
+                $error = 'identifiants invalides';
             } else {
                 // si ok on redirige
+                //save l'user en session
+                unset($user['password']);
+                $_SESSION['user'] = $user;
 
 
                 header('Location: index.php');
@@ -52,7 +58,18 @@ require_once 'template/header.php';
 
     <?php if ($error): ?>
     <div class="alert alert-warning" role="alert">
-        <?php echo $error; ?>
+        <?php echo $error;
+            unset($error) ?>
+    </div>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['success_message'])): ?>
+    <div class="alert alert-success" role="alert">
+        <?php
+            echo $_SESSION['success_message'];
+            unset($_SESSION['success_message']);
+            ?>
+
     </div>
     <?php endif; ?>
 
