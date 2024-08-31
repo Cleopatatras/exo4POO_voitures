@@ -1,7 +1,6 @@
 <?php
 
-require_once 'config/DbConnection.php';
-require_once 'config/session.php';
+require_once 'config/config.php';
 
 
 $title = 'Créer un compte';
@@ -46,9 +45,9 @@ require_once 'template/header.php';
 
     <!-- Ici si l'erreur est différente de false, null ou  '' on affiche un message d'alerte montrant notre erreur -->
     <?php if ($error): ?>
-    <div class="alert alert-warning" role="alert">
-        <?php echo $error; ?>
-    </div>
+        <div class="alert alert-warning" role="alert">
+            <?php echo $error; ?>
+        </div>
     <?php endif; ?>
 
     <form action="" method="post">

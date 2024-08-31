@@ -1,7 +1,6 @@
 <?php
 
-require_once 'config/DbConnection.php';
-require_once 'config/session.php';
+require_once 'config/config.php';
 
 $title = 'Se connecter';
 
@@ -57,20 +56,20 @@ require_once 'template/header.php';
     <h1>Se connecter</h1>
 
     <?php if ($error): ?>
-    <div class="alert alert-warning" role="alert">
-        <?php echo $error;
+        <div class="alert alert-warning" role="alert">
+            <?php echo $error;
             unset($error) ?>
-    </div>
+        </div>
     <?php endif; ?>
 
     <?php if (isset($_SESSION['success_message'])): ?>
-    <div class="alert alert-success" role="alert">
-        <?php
+        <div class="alert alert-success" role="alert">
+            <?php
             echo $_SESSION['success_message'];
             unset($_SESSION['success_message']);
             ?>
 
-    </div>
+        </div>
     <?php endif; ?>
 
     <form action="" method="post">
